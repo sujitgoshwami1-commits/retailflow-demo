@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RetailFlow POS & Inventory v1.0.0</title><style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e6e9ef;--accent:#2563eb;--danger:#dc2626;--success:#16a34a}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}.side{width:240px;background:#111827;color:#fff;padding:22px 16px;position:fixed;inset:0 auto 0 0}
+.brand{font-size:21px;font-weight:800;margin-bottom:28px}.nav button{display:block;width:100%;padding:11px 12px;margin:5px 0;border:0;border-radius:9px;background:transparent;color:#d1d5db;text-align:left;cursor:pointer}.nav button.active,.nav button:hover{background:#1f2937;color:#fff}
+.main{margin-left:240px;flex:1;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:26px}.pill{padding:7px 10px;border-radius:999px;background:#e8f0ff;color:#1d4ed8;font-size:12px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 2px 10px #00000008}.metric{font-size:26px;font-weight:800;margin-top:7px}.muted{color:var(--muted);font-size:13px}.section{margin-top:18px}.section h2{font-size:18px;margin:0 0 12px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{background:#f8fafc}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700}.green{background:#dcfce7;color:#166534}.orange{background:#ffedd5;color:#9a3412}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:9px;padding:9px 12px;background:var(--accent);color:#fff;cursor:pointer;font-weight:700}.btn.secondary{background:#eef2f7;color:#344054}.search{padding:10px 12px;border:1px solid var(--line);border-radius:9px;width:240px}
+.view{display:none}.view.active{display:block}.notice{padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;color:#1e40af;margin-bottom:15px}
+@media(max-width:900px){.side{width:190px}.main{margin-left:190px}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.side{position:static;width:100%;min-height:auto}.app{display:block}.main{margin-left:0;padding:15px}.grid{grid-template-columns:1fr}.top{gap:10px;flex-wrap:wrap}.search{width:100%}}
+</style></head>
+<body><div class="app"><aside class="side"><div class="brand">RetailFlow</div><div class="nav">
+<button class="active" onclick="show('dashboard',this)">Dashboard</button>
+<button onclick="show('sales',this)">Point of Sale</button>
+<button onclick="show('products',this)">Products</button>
+<button onclick="show('customers',this)">Customers</button>
+<button onclick="show('expenses',this)">Expenses</button>
+<button onclick="show('reports',this)">Reports</button>
+
+</div></aside><main class="main"><div class="top"><h1>RetailFlow POS & Inventory v1.0.0</h1><span class="pill">Offline Demo</span></div>
+
+<div id="dashboard" class="view active">
+<div class="notice">Demo mode: sample retail data is loaded locally in your browser. Nothing is sent to a server.</div>
+<div class="grid">
+<div class="card"><div class="muted">Today's Sales</div><div class="metric">$1,284</div></div>
+<div class="card"><div class="muted">Products</div><div class="metric">248</div></div>
+<div class="card"><div class="muted">Low Stock</div><div class="metric">12</div></div>
+<div class="card"><div class="muted">Customers</div><div class="metric">186</div></div></div>
+<div class="section"><h2>Recent Sales</h2><table><tr><th>Invoice</th><th>Customer</th><th>Total</th><th>Status</th></tr>
+<tr><td>#INV-1048</td><td>James Carter</td><td>$145</td><td><span class="badge green">Paid</span></td></tr>
+<tr><td>#INV-1047</td><td>Emma Wilson</td><td>$89</td><td><span class="badge green">Paid</span></td></tr>
+<tr><td>#INV-1046</td><td>Noah Smith</td><td>$210</td><td><span class="badge orange">Pending</span></td></tr></table></div></div>
+<div id="sales" class="view"><div class="card"><h2>Point of Sale</h2><p class="muted">Demo checkout interface.</p><div class="actions"><button class="btn" onclick="alert('Demo sale created and stored locally.')">Complete Sale</button><button class="btn secondary" onclick="alert('Barcode scanner workflow is demo-ready.')">Scan Barcode</button></div></div></div>
+<div id="products" class="view"><div class="card"><h2>Products & Inventory</h2><table><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Price</th></tr><tr><td>Wireless Earbuds</td><td>WE-1001</td><td>24</td><td>$29</td></tr><tr><td>USB-C Cable</td><td>UC-2040</td><td>8</td><td>$12</td></tr><tr><td>Power Bank</td><td>PB-5000</td><td>3</td><td>$35</td></tr></table></div></div>
+<div id="customers" class="view"><div class="card"><h2>Customers</h2><input class="search" placeholder="Search customers" oninput="filterTable(this,'cust')"><table id="cust"><tr><th>Name</th><th>Phone</th><th>Purchases</th></tr><tr><td>James Carter</td><td>+1 555 0101</td><td>12</td></tr><tr><td>Emma Wilson</td><td>+1 555 0102</td><td>7</td></tr></table></div></div>
+<div id="expenses" class="view"><div class="card"><h2>Expenses</h2><table><tr><th>Date</th><th>Category</th><th>Amount</th></tr><tr><td>Aug 25</td><td>Utilities</td><td>$120</td></tr><tr><td>Aug 24</td><td>Supplies</td><td>$85</td></tr></table></div></div>
+<div id="reports" class="view"><div class="card"><h2>Business Reports</h2><p>Sales: <b>$18,420</b> &nbsp; Expenses: <b>$5,240</b> &nbsp; Net: <b>$13,180</b></p><button class="btn" onclick="saveDemo('retailflow-backup',{sales:18420,expenses:5240})">Create JSON Backup</button></div></div>
+<script>function filterTable(inp,id){let q=inp.value.toLowerCase();document.querySelectorAll('#'+id+' tr').forEach((r,i)=>{if(i)r.style.display=r.innerText.toLowerCase().includes(q)?'':'none'})}</script>
+
+</main></div>
+<script>
+function show(id,el){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function saveDemo(key,data){localStorage.setItem(key,JSON.stringify(data));alert('Saved locally in this browser.')} 
+</script></body></html>
