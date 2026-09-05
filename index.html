@@ -1,48 +1,204 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RetailFlow POS & Inventory v1.0.0</title><style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e6e9ef;--accent:#2563eb;--danger:#dc2626;--success:#16a34a}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
-.app{display:flex;min-height:100vh}.side{width:240px;background:#111827;color:#fff;padding:22px 16px;position:fixed;inset:0 auto 0 0}
-.brand{font-size:21px;font-weight:800;margin-bottom:28px}.nav button{display:block;width:100%;padding:11px 12px;margin:5px 0;border:0;border-radius:9px;background:transparent;color:#d1d5db;text-align:left;cursor:pointer}.nav button.active,.nav button:hover{background:#1f2937;color:#fff}
-.main{margin-left:240px;flex:1;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:26px}.pill{padding:7px 10px;border-radius:999px;background:#e8f0ff;color:#1d4ed8;font-size:12px;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 2px 10px #00000008}.metric{font-size:26px;font-weight:800;margin-top:7px}.muted{color:var(--muted);font-size:13px}.section{margin-top:18px}.section h2{font-size:18px;margin:0 0 12px}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}th{background:#f8fafc}
-.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700}.green{background:#dcfce7;color:#166534}.orange{background:#ffedd5;color:#9a3412}.red{background:#fee2e2;color:#991b1b}.blue{background:#dbeafe;color:#1e40af}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:9px;padding:9px 12px;background:var(--accent);color:#fff;cursor:pointer;font-weight:700}.btn.secondary{background:#eef2f7;color:#344054}.search{padding:10px 12px;border:1px solid var(--line);border-radius:9px;width:240px}
-.view{display:none}.view.active{display:block}.notice{padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;color:#1e40af;margin-bottom:15px}
-@media(max-width:900px){.side{width:190px}.main{margin-left:190px}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.side{position:static;width:100%;min-height:auto}.app{display:block}.main{margin-left:0;padding:15px}.grid{grid-template-columns:1fr}.top{gap:10px;flex-wrap:wrap}.search{width:100%}}
-</style></head>
-<body><div class="app"><aside class="side"><div class="brand">RetailFlow</div><div class="nav">
-<button class="active" onclick="show('dashboard',this)">Dashboard</button>
-<button onclick="show('sales',this)">Point of Sale</button>
-<button onclick="show('products',this)">Products</button>
-<button onclick="show('customers',this)">Customers</button>
-<button onclick="show('expenses',this)">Expenses</button>
-<button onclick="show('reports',this)">Reports</button>
-
-</div></aside><main class="main"><div class="top"><h1>RetailFlow POS & Inventory v1.0.0</h1><span class="pill">Offline Demo</span></div>
-
-<div id="dashboard" class="view active">
-<div class="notice">Demo mode: sample retail data is loaded locally in your browser. Nothing is sent to a server.</div>
-<div class="grid">
-<div class="card"><div class="muted">Today's Sales</div><div class="metric">$1,284</div></div>
-<div class="card"><div class="muted">Products</div><div class="metric">248</div></div>
-<div class="card"><div class="muted">Low Stock</div><div class="metric">12</div></div>
-<div class="card"><div class="muted">Customers</div><div class="metric">186</div></div></div>
-<div class="section"><h2>Recent Sales</h2><table><tr><th>Invoice</th><th>Customer</th><th>Total</th><th>Status</th></tr>
-<tr><td>#INV-1048</td><td>James Carter</td><td>$145</td><td><span class="badge green">Paid</span></td></tr>
-<tr><td>#INV-1047</td><td>Emma Wilson</td><td>$89</td><td><span class="badge green">Paid</span></td></tr>
-<tr><td>#INV-1046</td><td>Noah Smith</td><td>$210</td><td><span class="badge orange">Pending</span></td></tr></table></div></div>
-<div id="sales" class="view"><div class="card"><h2>Point of Sale</h2><p class="muted">Demo checkout interface.</p><div class="actions"><button class="btn" onclick="alert('Demo sale created and stored locally.')">Complete Sale</button><button class="btn secondary" onclick="alert('Barcode scanner workflow is demo-ready.')">Scan Barcode</button></div></div></div>
-<div id="products" class="view"><div class="card"><h2>Products & Inventory</h2><table><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Price</th></tr><tr><td>Wireless Earbuds</td><td>WE-1001</td><td>24</td><td>$29</td></tr><tr><td>USB-C Cable</td><td>UC-2040</td><td>8</td><td>$12</td></tr><tr><td>Power Bank</td><td>PB-5000</td><td>3</td><td>$35</td></tr></table></div></div>
-<div id="customers" class="view"><div class="card"><h2>Customers</h2><input class="search" placeholder="Search customers" oninput="filterTable(this,'cust')"><table id="cust"><tr><th>Name</th><th>Phone</th><th>Purchases</th></tr><tr><td>James Carter</td><td>+1 555 0101</td><td>12</td></tr><tr><td>Emma Wilson</td><td>+1 555 0102</td><td>7</td></tr></table></div></div>
-<div id="expenses" class="view"><div class="card"><h2>Expenses</h2><table><tr><th>Date</th><th>Category</th><th>Amount</th></tr><tr><td>Aug 25</td><td>Utilities</td><td>$120</td></tr><tr><td>Aug 24</td><td>Supplies</td><td>$85</td></tr></table></div></div>
-<div id="reports" class="view"><div class="card"><h2>Business Reports</h2><p>Sales: <b>$18,420</b> &nbsp; Expenses: <b>$5,240</b> &nbsp; Net: <b>$13,180</b></p><button class="btn" onclick="saveDemo('retailflow-backup',{sales:18420,expenses:5240})">Create JSON Backup</button></div></div>
-<script>function filterTable(inp,id){let q=inp.value.toLowerCase();document.querySelectorAll('#'+id+' tr').forEach((r,i)=>{if(i)r.style.display=r.innerText.toLowerCase().includes(q)?'':'none'})}</script>
-
-</main></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RetailFlow POS — Small Business POS & Inventory (Demo)</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#e6eaf0;--primary:#2563eb;--primary2:#1d4ed8;--good:#059669;--warn:#d97706;--bad:#dc2626;--shadow:0 10px 30px rgba(20,35,60,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#111827;color:#fff;padding:20px 14px;position:fixed;inset:0 auto 0 0;z-index:10}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;padding:10px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:grid;place-items:center}.nav{margin-top:24px}.nav button{width:100%;padding:12px 14px;margin:3px 0;border-radius:10px;background:transparent;color:#cbd5e1;text-align:left}.nav button:hover,.nav button.active{background:#1f2937;color:#fff}.main{margin-left:250px;width:calc(100% - 250px)}.topbar{height:70px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 26px;position:sticky;top:0;z-index:5}.top-actions{display:flex;gap:8px;align-items:center}.container{padding:26px;max-width:1500px;margin:auto}.page{display:none}.page.active{display:block}.head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.head h1{margin:0;font-size:26px}.muted{color:var(--muted);font-size:13px}.btn{padding:10px 14px;border-radius:10px;background:#eef2f7;color:var(--text);font-weight:700}.btn.primary{background:var(--primary);color:#fff}.btn.primary:hover{background:var(--primary2)}.btn.danger{background:#fee2e2;color:#991b1b}.btn.small{padding:7px 10px;font-size:12px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.metric{font-size:25px;font-weight:800;margin-top:7px}.icon{font-size:20px}.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.panel h3{margin:0 0 14px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.table th{font-size:12px;color:var(--muted);text-transform:uppercase}.status{padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}.status.good{background:#d1fae5;color:#047857}.status.warn{background:#fef3c7;color:#92400e}.status.bad{background:#fee2e2;color:#991b1b}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:var(--muted)}.field input,.field select{width:100%;padding:10px 11px;border:1px solid #d9dee7;border-radius:9px;background:#fff}.search{width:280px;padding:10px 12px;border:1px solid #d9dee7;border-radius:10px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:30}.modal.show{display:flex}.modalbox{background:#fff;border-radius:18px;max-width:680px;width:100%;padding:22px;max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.close{background:#eef2f7;border-radius:50%;width:34px;height:34px}.sale-layout{display:grid;grid-template-columns:1.5fr .8fr;gap:16px}.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.product-tile{padding:14px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left}.product-tile:hover{border-color:var(--primary)}.product-tile b{display:block;margin-bottom:6px}.cart-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.total{display:flex;justify-content:space-between;font-size:18px;font-weight:800;padding-top:14px}.empty{padding:30px;text-align:center;color:var(--muted)}.bar{height:10px;background:#eef2f7;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#8b5cf6)}.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:10px;display:none;z-index:50}.toast.show{display:block}.mobile-menu{display:none}
+.demo-banner{background:#fffbeb;border-bottom:1px solid #fde68a;color:#92400e;padding:10px 20px;text-align:center;font-size:13px;font-weight:700}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(2,1fr)}.grid2,.sale-layout{grid-template-columns:1fr}.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile-menu{display:block;background:#eef2f7;border-radius:9px;padding:9px}.topbar{padding:0 14px}.container{padding:16px}.cards{grid-template-columns:1fr}.formgrid,.grid3{grid-template-columns:1fr}.search{width:100%}.head{align-items:flex-start;flex-direction:column}.product-grid{grid-template-columns:1fr 1fr}}
+@media print{.sidebar,.topbar,.no-print,.demo-banner{display:none!important}.main{margin:0;width:100%}.container{padding:0}.card,.panel{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="demo-banner">🕐 Demo Mode — all data resets automatically every day at midnight</div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">RF</div><div>RetailFlow<br><span class="muted" style="color:#94a3b8">POS & Inventory</span></div></div>
+  <div class="nav">
+    <button class="active" data-page="dashboard">▦ Dashboard</button>
+    <button data-page="pos">🛒 Point of Sale</button>
+    <button data-page="products">📦 Products</button>
+    <button data-page="customers">👥 Customers</button>
+    <button data-page="sales">🧾 Sales</button>
+    <button data-page="expenses">💳 Expenses</button>
+    <button data-page="reports">📊 Reports</button>
+    <button data-page="settings">⚙ Settings</button>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;gap:10px;align-items:center"><button class="mobile-menu" onclick="toggleSidebar()">☰</button><strong id="pageTitle">Dashboard</strong></div>
+  <div class="top-actions"><span id="storeLabel" class="muted">Demo Store</span><button class="btn" onclick="toggleTheme()">◐</button></div>
+</header>
+<div class="container">
+<section class="page active" id="dashboard">
+ <div class="head"><div><h1>Good business starts with clear numbers.</h1><div class="muted">Your local-first small business command center.</div></div><button class="btn primary" onclick="go('pos')">+ New Sale</button></div>
+ <div class="cards">
+  <div class="card"><div class="muted">Today's Sales</div><div class="metric" id="mSales">$0.00</div><div class="muted">Transactions <span id="mTx">0</span></div></div>
+  <div class="card"><div class="muted">Gross Profit</div><div class="metric" id="mProfit">$0.00</div><div class="muted">Based on product cost</div></div>
+  <div class="card"><div class="muted">Inventory Value</div><div class="metric" id="mInv">$0.00</div><div class="muted">Current stock × cost</div></div>
+  <div class="card"><div class="muted">Low Stock</div><div class="metric" id="mLow">0</div><div class="muted">Items need attention</div></div>
+ </div>
+ <div class="grid2">
+  <div class="panel"><h3>Recent Sales</h3><div class="tablewrap"><table class="table"><thead><tr><th>Invoice</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody id="recentSales"></tbody></table></div></div>
+  <div class="panel"><h3>Inventory Health</h3><div id="health"></div></div>
+ </div>
+</section>
+<section class="page" id="pos">
+ <div class="head"><div><h1>Point of Sale</h1><div class="muted">Fast checkout with barcode-ready search.</div></div></div>
+ <div class="sale-layout">
+  <div class="panel">
+   <div class="toolbar"><input id="posSearch" class="search" placeholder="Search product or scan barcode…" oninput="renderPosProducts()"><select id="posCategory" onchange="renderPosProducts()"><option value="">All categories</option></select></div>
+   <div class="product-grid" id="posProducts"></div>
+  </div>
+  <div class="panel">
+   <div style="display:flex;justify-content:space-between;align-items:center"><h3>Current Cart</h3><button class="btn small danger" onclick="clearCart()">Clear</button></div>
+   <div id="cart"></div>
+   <div class="total"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+   <div class="formgrid" style="margin-top:12px">
+    <div class="field"><label>Tax %</label><input id="taxRate" type="number" value="0" min="0" step=".01" oninput="renderCart()"></div>
+    <div class="field"><label>Customer</label><select id="saleCustomer"></select></div>
+   </div>
+   <div class="total"><span>Tax</span><span id="cartTax">$0.00</span></div><div class="total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+   <button class="btn primary" style="width:100%;margin-top:14px" onclick="completeSale()">Complete Sale</button>
+  </div>
+ </div>
+</section>
+<section class="page" id="products">
+ <div class="head"><div><h1>Products & Inventory</h1><div class="muted">SKU, barcode, pricing and stock control.</div></div><button class="btn primary" onclick="openProductModal()">+ Add Product</button></div>
+ <div class="panel"><div class="toolbar"><input class="search" id="productSearch" placeholder="Search name, SKU or barcode…" oninput="renderProducts()"><select id="productFilter" onchange="renderProducts()"><option value="">All stock</option><option value="low">Low stock</option><option value="out">Out of stock</option></select></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>SKU</th><th>Barcode</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Action</th></tr></thead><tbody id="productsTable"></tbody></table></div></div>
+</section>
+<section class="page" id="customers">
+ <div class="head"><div><h1>Customers</h1><div class="muted">Customer records and purchase history.</div></div><button class="btn primary" onclick="openCustomerModal()">+ Add Customer</button></div>
+ <div class="panel"><div class="tablewrap"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Purchases</th><th>Action</th></tr></thead><tbody id="customersTable"></tbody></table></div></div>
+</section>
+<section class="page" id="sales">
+ <div class="head"><div><h1>Sales</h1><div class="muted">Invoices and completed transactions.</div></div><button class="btn" onclick="exportCSV()">Export CSV</button></div>
+ <div class="panel"><div class="tablewrap"><table class="table"><thead><tr><th>Invoice</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Action</th></tr></thead><tbody id="salesTable"></tbody></table></div></div>
+</section>
+<section class="page" id="expenses">
+ <div class="head"><div><h1>Expenses</h1><div class="muted">Track rent, utilities, shipping and other costs.</div></div><button class="btn primary" onclick="openExpenseModal()">+ Add Expense</button></div>
+ <div class="panel"><div class="tablewrap"><table class="table"><thead><tr><th>Date</th><th>Category</th><th>Note</th><th>Amount</th><th>Action</th></tr></thead><tbody id="expensesTable"></tbody></table></div></div>
+</section>
+<section class="page" id="reports">
+ <div class="head"><div><h1>Reports</h1><div class="muted">Simple business intelligence for owners.</div></div></div>
+ <div class="cards"><div class="card"><div class="muted">Total Revenue</div><div class="metric" id="rRevenue">$0</div></div><div class="card"><div class="muted">Product Cost</div><div class="metric" id="rCost">$0</div></div><div class="card"><div class="muted">Expenses</div><div class="metric" id="rExpenses">$0</div></div><div class="card"><div class="muted">Net Profit</div><div class="metric" id="rNet">$0</div></div></div>
+ <div class="grid2"><div class="panel"><h3>Top Products</h3><div id="topProducts"></div></div><div class="panel"><h3>Category Mix</h3><div id="categoryMix"></div></div></div>
+</section>
+<section class="page" id="settings">
+ <div class="head"><div><h1>Settings</h1><div class="muted">Store preferences and local data tools.</div></div></div>
+ <div class="grid2"><div class="panel"><h3>Store Settings</h3><div class="formgrid">
+ <div class="field"><label>Store name</label><input id="setStore"></div>
+ <div class="field"><label>Currency</label><select id="setCurrency"><option value="USD">USD — US Dollar</option><option value="CAD">CAD — Canadian Dollar</option><option value="EUR">EUR — Euro</option></select></div>
+ <div class="field"><label>Country / Market</label><select id="setCountry"><option>United States</option><option>Canada</option><option>Germany</option></select></div>
+ <div class="field"><label>Default VAT / Tax %</label><input id="setTax" type="number" min="0" step=".01"></div>
+ </div><button class="btn primary" style="margin-top:14px" onclick="saveSettings()">Save Settings</button></div>
+ <div class="panel"><h3>Data</h3><p class="muted">This demo stores data in your browser and resets automatically every day at midnight. Export a backup if you want to keep it longer.</p><button class="btn" onclick="backupData()">Download Backup</button> <button class="btn danger" onclick="resetData()">Reset Demo Data Now</button></div></div>
+</section>
+</div></main></div>
+<div class="modal" id="productModal"><div class="modalbox"><div class="modalhead"><h2 id="productModalTitle">Add Product</h2><button class="close" onclick="closeModal('productModal')">×</button></div>
+<form id="productForm" onsubmit="saveProduct(event)"><input type="hidden" id="pId"><div class="formgrid">
+<div class="field"><label>Product name</label><input id="pName" required></div><div class="field"><label>SKU</label><input id="pSku" required></div>
+<div class="field"><label>Barcode</label><input id="pBarcode"></div><div class="field"><label>Category</label><input id="pCategory" required placeholder="Accessories"></div>
+<div class="field"><label>Cost price</label><input id="pCost" type="number" step=".01" min="0" required></div><div class="field"><label>Selling price</label><input id="pPrice" type="number" step=".01" min="0" required></div>
+<div class="field"><label>Stock</label><input id="pStock" type="number" min="0" required></div><div class="field"><label>Low-stock threshold</label><input id="pLow" type="number" min="0" value="5" required></div>
+</div><button class="btn primary" style="margin-top:16px">Save Product</button></form></div></div>
+<div class="modal" id="customerModal"><div class="modalbox"><div class="modalhead"><h2>Add Customer</h2><button class="close" onclick="closeModal('customerModal')">×</button></div>
+<form onsubmit="saveCustomer(event)"><div class="formgrid"><div class="field"><label>Name</label><input id="cName" required></div><div class="field"><label>Email</label><input id="cEmail" type="email"></div><div class="field"><label>Phone</label><input id="cPhone"></div><div class="field"><label>Address</label><input id="cAddress"></div></div><button class="btn primary" style="margin-top:16px">Save Customer</button></form></div></div>
+<div class="modal" id="expenseModal"><div class="modalbox"><div class="modalhead"><h2>Add Expense</h2><button class="close" onclick="closeModal('expenseModal')">×</button></div>
+<form onsubmit="saveExpense(event)"><div class="formgrid"><div class="field"><label>Category</label><select id="eCat"><option>Rent</option><option>Utilities</option><option>Shipping</option><option>Marketing</option><option>Supplies</option><option>Other</option></select></div><div class="field"><label>Amount</label><input id="eAmount" type="number" step=".01" min="0" required></div><div class="field"><label>Date</label><input id="eDate" type="date" required></div><div class="field"><label>Note</label><input id="eNote"></div></div><button class="btn primary" style="margin-top:16px">Save Expense</button></form></div></div>
+<div class="toast" id="toast"></div>
 <script>
-function show(id,el){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
-function saveDemo(key,data){localStorage.setItem(key,JSON.stringify(data));alert('Saved locally in this browser.')} 
-</script></body></html>
+const KEY="retailflow_pos_demo_v1";
+const RESET_KEY="retailflow_demo_last_reset";
+const DEFAULT_DB={
+ settings:{store:"Demo Store",currency:"USD",country:"United States",tax:0},
+ products:[
+  {id:1,name:"Premium USB-C Cable",sku:"CAB-001",barcode:"890100000001",category:"Accessories",cost:4,price:12.99,stock:24,low:5},
+  {id:2,name:"20W Fast Charger",sku:"CHR-020",barcode:"890100000002",category:"Chargers",cost:8,price:19.99,stock:12,low:5},
+  {id:3,name:"Wireless Earbuds",sku:"EAR-100",barcode:"890100000003",category:"Audio",cost:18,price:39.99,stock:7,low:3},
+  {id:4,name:"Phone Case",sku:"CAS-010",barcode:"890100000004",category:"Cases",cost:5,price:14.99,stock:3,low:5}
+ ],
+ customers:[{id:1,name:"Walk-in Customer",email:"",phone:"",address:""}],
+ sales:[],expenses:[]
+};
+function todayStr(){return new Date().toDateString()}
+function freshDB(){return JSON.parse(JSON.stringify(DEFAULT_DB))}
+function loadDB(){
+ let lastReset=localStorage.getItem(RESET_KEY),today=todayStr();
+ if(lastReset!==today){
+  localStorage.setItem(RESET_KEY,today);
+  localStorage.setItem(KEY,JSON.stringify(freshDB()));
+  return freshDB();
+ }
+ return JSON.parse(localStorage.getItem(KEY)||"null")||freshDB();
+}
+let db=loadDB();
+let cart=[];
+function save(){localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem(RESET_KEY,todayStr())}
+function checkMidnightReset(){
+ if(localStorage.getItem(RESET_KEY)!==todayStr()){
+  db=freshDB();cart=[];
+  localStorage.setItem(KEY,JSON.stringify(db));
+  localStorage.setItem(RESET_KEY,todayStr());
+  renderAll();
+  toast("Demo data has been reset for a new day.");
+ }
+}
+setInterval(checkMidnightReset,60000);
+function currency(n){return new Intl.NumberFormat(undefined,{style:"currency",currency:db.settings.currency||"USD"}).format(Number(n)||0)}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(page).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));document.getElementById("pageTitle").textContent=document.querySelector(`[data-page="${page}"]`).textContent.trim();renderAll();document.getElementById("sidebar").classList.remove("open")}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open")}
+function toggleTheme(){document.body.dataset.dark=document.body.dataset.dark?"":"1";if(document.body.dataset.dark){document.documentElement.style.setProperty("--bg","#0b1220");document.documentElement.style.setProperty("--card","#111827");document.documentElement.style.setProperty("--text","#f8fafc");document.documentElement.style.setProperty("--line","#263244")}else location.reload()}
+function renderAll(){renderDashboard();renderPosProducts();renderCart();renderProducts();renderCustomers();renderSales();renderExpenses();renderReports();renderSettings()}
+function renderDashboard(){
+ const today=new Date().toISOString().slice(0,10), ss=db.sales.filter(s=>s.date.slice(0,10)===today);
+ const rev=ss.reduce((a,s)=>a+s.total,0), profit=ss.reduce((a,s)=>a+s.profit,0), inv=db.products.reduce((a,p)=>a+p.cost*p.stock,0), low=db.products.filter(p=>p.stock<=p.low).length;
+ document.getElementById("mSales").textContent=currency(rev);document.getElementById("mTx").textContent=ss.length;document.getElementById("mProfit").textContent=currency(profit);document.getElementById("mInv").textContent=currency(inv);document.getElementById("mLow").textContent=low;
+ document.getElementById("recentSales").innerHTML=db.sales.slice(-6).reverse().map(s=>`<tr><td>${s.invoice}</td><td>${s.customer}</td><td>${currency(s.total)}</td><td><span class="status good">Paid</span></td></tr>`).join("")||`<tr><td colspan="4" class="empty">No sales yet.</td></tr>`;
+ document.getElementById("health").innerHTML=db.products.map(p=>`<div style="margin:14px 0"><div style="display:flex;justify-content:space-between"><span>${p.name}</span><b>${p.stock}</b></div><div class="bar"><span style="width:${Math.min(100,Math.max(5,p.stock/Math.max(1,p.low*2)*100))}%"></span></div></div>`).join("");
+}
+function renderPosProducts(){
+ const q=(document.getElementById("posSearch")?.value||"").toLowerCase(), cat=document.getElementById("posCategory")?.value||"";
+ const cats=[...new Set(db.products.map(p=>p.category))]; if(document.getElementById("posCategory")) document.getElementById("posCategory").innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option ${c===cat?"selected":""}>${c}</option>`).join("");
+ const arr=db.products.filter(p=>(!q||[p.name,p.sku,p.barcode].join(" ").toLowerCase().includes(q))&&(!cat||p.category===cat)&&p.stock>0);
+ document.getElementById("posProducts").innerHTML=arr.map(p=>`<button class="product-tile" onclick="addToCart(${p.id})"><b>${p.name}</b><span class="muted">${p.category} · ${p.stock} in stock</span><div style="margin-top:9px;font-weight:800">${currency(p.price)}</div></button>`).join("")||'<div class="empty">No matching products.</div>';
+}
+function addToCart(id){let p=db.products.find(x=>x.id===id);let c=cart.find(x=>x.id===id);if(c){if(c.qty<p.stock)c.qty++;else return toast("Stock limit reached")}else cart.push({id,qty:1});renderCart()}
+function clearCart(){cart=[];renderCart()}
+function renderCart(){const box=document.getElementById("cart");box.innerHTML=cart.map(c=>{let p=db.products.find(x=>x.id===c.id);return `<div class="cart-row"><div><b>${p.name}</b><div class="muted">${currency(p.price)} × ${c.qty}</div></div><div><button class="btn small" onclick="changeQty(${p.id},-1)">−</button> <button class="btn small" onclick="changeQty(${p.id},1)">+</button></div></div>`}).join("")||'<div class="empty">Cart is empty.</div>';let sub=cart.reduce((a,c)=>{let p=db.products.find(x=>x.id===c.id);return a+p.price*c.qty},0),tax=sub*(Number(document.getElementById("taxRate")?.value)||0)/100;document.getElementById("cartSubtotal").textContent=currency(sub);document.getElementById("cartTax").textContent=currency(tax);document.getElementById("cartTotal").textContent=currency(sub+tax)}
+function changeQty(id,d){let c=cart.find(x=>x.id===id),p=db.products.find(x=>x.id===id);if(!c)return;c.qty+=d;if(c.qty>p.stock)c.qty=p.stock;if(c.qty<=0)cart=cart.filter(x=>x.id!==id);renderCart()}
+function completeSale(){if(!cart.length)return toast("Add products first.");let sub=cart.reduce((a,c)=>a+db.products.find(p=>p.id===c.id).price*c.qty,0),tax=sub*(Number(document.getElementById("taxRate").value)||0)/100,total=sub+tax;let cust=db.customers.find(c=>c.id==document.getElementById("saleCustomer").value)||db.customers[0];let cost=cart.reduce((a,c)=>a+db.products.find(p=>p.id===c.id).cost*c.qty,0);cart.forEach(c=>db.products.find(p=>p.id===c.id).stock-=c.qty);db.sales.push({id:Date.now(),invoice:"INV-"+String(Date.now()).slice(-7),date:new Date().toISOString(),customer:cust.name,customerId:cust.id,items:cart.map(c=>({...c})),subtotal:sub,tax,total,profit:sub-cost});save();cart=[];toast("Sale completed");renderAll()}
+function renderProducts(){let q=(document.getElementById("productSearch")?.value||"").toLowerCase(), f=document.getElementById("productFilter")?.value||"";let arr=db.products.filter(p=>(!q||[p.name,p.sku,p.barcode].join(" ").toLowerCase().includes(q))&&(!f||(f==="low"&&p.stock<=p.low)||(f==="out"&&p.stock===0)));document.getElementById("productsTable").innerHTML=arr.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.sku}</td><td>${p.barcode||"—"}</td><td>${p.category}</td><td>${currency(p.price)}</td><td>${p.stock}</td><td><span class="status ${p.stock===0?"bad":p.stock<=p.low?"warn":"good"}">${p.stock===0?"Out":p.stock<=p.low?"Low":"Healthy"}</span></td><td><button class="btn small" onclick="editProduct(${p.id})">Edit</button> <button class="btn small danger" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join("")||'<tr><td colspan="8" class="empty">No products.</td></tr>'}
+function openProductModal(p){document.getElementById("productForm").reset();document.getElementById("pId").value=p?.id||"";if(p){for(const [k,id] of Object.entries({name:"pName",sku:"pSku",barcode:"pBarcode",category:"pCategory",cost:"pCost",price:"pPrice",stock:"pStock",low:"pLow"}))document.getElementById(id).value=p[k]}document.getElementById("productModalTitle").textContent=p?"Edit Product":"Add Product";document.getElementById("productModal").classList.add("show")}
+function editProduct(id){openProductModal(db.products.find(p=>p.id===id))}
+function saveProduct(e){e.preventDefault();let id=Number(document.getElementById("pId").value),p={id:id||Date.now(),name:pName.value,sku:pSku.value,barcode:pBarcode.value,category:pCategory.value,cost:Number(pCost.value),price:Number(pPrice.value),stock:Number(pStock.value),low:Number(pLow.value)};if(id)db.products=db.products.map(x=>x.id===id?p:x);else db.products.push(p);save();closeModal("productModal");renderAll();toast("Product saved")}
+function deleteProduct(id){if(confirm("Delete this product?")){db.products=db.products.filter(p=>p.id!==id);save();renderAll()}}
+function renderCustomers(){document.getElementById("customersTable").innerHTML=db.customers.map(c=>`<tr><td><b>${c.name}</b></td><td>${c.email||"—"}</td><td>${c.phone||"—"}</td><td>${db.sales.filter(s=>s.customerId===c.id).length}</td><td><button class="btn small danger" onclick="deleteCustomer(${c.id})">Delete</button></td></tr>`).join("");document.getElementById("saleCustomer").innerHTML=db.customers.map(c=>`<option value="${c.id}">${c.name}</option>`).join("")}
+function openCustomerModal(){document.getElementById("customerModal").classList.add("show")}
+function saveCustomer(e){e.preventDefault();db.customers.push({id:Date.now(),name:cName.value,email:cEmail.value,phone:cPhone.value,address:cAddress.value});save();closeModal("customerModal");e.target.reset();renderAll();toast("Customer added")}
+function deleteCustomer(id){if(id===1)return toast("Walk-in customer cannot be deleted.");if(confirm("Delete customer?")){db.customers=db.customers.filter(c=>c.id!==id);save();renderAll()}}
+function renderSales(){document.getElementById("salesTable").innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${s.invoice}</td><td>${new Date(s.date).toLocaleString()}</td><td>${s.customer}</td><td>${s.items.reduce((a,i)=>a+i.qty,0)}</td><td>${currency(s.total)}</td><td><button class="btn small" onclick="printInvoice('${s.invoice}')">Print</button></td></tr>`).join("")||'<tr><td colspan="6" class="empty">No completed sales.</td></tr>'}
+function printInvoice(inv){let s=db.sales.find(x=>x.invoice===inv);let rows=s.items.map(i=>{let p=db.products.find(p=>p.id===i.id);return `<tr><td>${p.name}</td><td>${i.qty}</td><td>${currency(p.price)}</td><td>${currency(p.price*i.qty)}</td></tr>`}).join("");let w=open("","_blank");w.document.write(`<html><head><title>${inv}</title><style>body{font-family:Arial;padding:30px}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left}</style></head><body><h1>${db.settings.store}</h1><p>${inv} · ${new Date(s.date).toLocaleString()}<br>Customer: ${s.customer}</p><table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>${rows}</table><h2 style="text-align:right">Total: ${currency(s.total)}</h2><script>window.print()<\/script></body></html>`);w.document.close()}
+function renderExpenses(){document.getElementById("expensesTable").innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.date}</td><td>${e.cat}</td><td>${e.note||"—"}</td><td>${currency(e.amount)}</td><td><button class="btn small danger" onclick="deleteExpense(${e.id})">Delete</button></td></tr>`).join("")||'<tr><td colspan="5" class="empty">No expenses.</td></tr>'}
+function openExpenseModal(){eDate.value=new Date().toISOString().slice(0,10);document.getElementById("expenseModal").classList.add("show")}
+function saveExpense(e){e.preventDefault();db.expenses.push({id:Date.now(),cat:eCat.value,amount:Number(eAmount.value),date:eDate.value,note:eNote.value});save();closeModal("expenseModal");e.target.reset();renderAll();toast("Expense added")}
+function deleteExpense(id){db.expenses=db.expenses.filter(e=>e.id!==id);save();renderAll()}
+function renderReports(){let revenue=db.sales.reduce((a,s)=>a+s.subtotal,0),cost=db.sales.reduce((a,s)=>a+(s.subtotal-s.profit),0),exp=db.expenses.reduce((a,e)=>a+e.amount,0);rRevenue.textContent=currency(revenue);rCost.textContent=currency(cost);rExpenses.textContent=currency(exp);rNet.textContent=currency(revenue-cost-exp);let map={};db.sales.forEach(s=>s.items.forEach(i=>{map[i.id]=(map[i.id]||0)+i.qty}));let top=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,5);topProducts.innerHTML=top.map(([id,n])=>{let p=db.products.find(x=>x.id==id);return `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span>${p?.name||"Deleted product"}</span><b>${n} sold</b></div>`}).join("")||'<div class="empty">No sales data.</div>';let cm={};db.products.forEach(p=>cm[p.category]=(cm[p.category]||0)+p.stock*p.cost);categoryMix.innerHTML=Object.entries(cm).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:9px 0"><span>${k}</span><b>${currency(v)}</b></div>`).join("")}
+function renderSettings(){setStore.value=db.settings.store;setCurrency.value=db.settings.currency;setCountry.value=db.settings.country;setTax.value=db.settings.tax}
+function saveSettings(){db.settings.store=setStore.value;db.settings.currency=setCurrency.value;db.settings.country=setCountry.value;db.settings.tax=Number(setTax.value)||0;document.getElementById("storeLabel").textContent=db.settings.store;save();renderAll();toast("Settings saved")}
+function backupData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="retailflow-backup.json";a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(confirm("Reset all local demo data now?")){db=freshDB();cart=[];localStorage.setItem(KEY,JSON.stringify(db));localStorage.setItem(RESET_KEY,todayStr());renderAll();toast("Demo data reset.")}}
+function exportCSV(){let rows=[["Invoice","Date","Customer","Total"],...db.sales.map(s=>[s.invoice,s.date,s.customer,s.total])];let csv=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n"),blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sales.csv";a.click()}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+document.getElementById("taxRate").value=db.settings.tax;document.getElementById("storeLabel").textContent=db.settings.store;renderAll();
+</script>
+</body>
+</html>
